@@ -20,28 +20,6 @@
                 '<iframe src="' + page + '" frameborder="0"></iframe>';
         }
 
-      <!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8" />
-    <title>HiveTech</title>
-    <link rel="stylesheet" href="style.css" />
-</head>
-<body>
-    <div class="panel center-panel">
-        <h1>HiveTech</h1>
-        <button onclick="loadPage('viewer.html')">View Map</button>
-        <button onclick="checkPassword()">Edit Map</button>
-    </div>
-    <div id="content" class="iframe-container"></div>
-
-    <script>
-        function loadPage(page) {
-            document.getElementById('content').innerHTML =
-                '<button class="back-button" onclick="goHome()">Back to Home</button>' +
-                '<iframe src="' + page + '" frameborder="0"></iframe>';
-        }
-
         function stringToHex(str) {
             return Array.from(str)
                 .map(c => c.charCodeAt(0).toString(16).padStart(2, '0'))
@@ -55,7 +33,7 @@
                 return;
             }
 
-            const correctHex = "486976655465636841646d696e";
+            const correctHex = "486976655465636841646d696e"; // hex for "HiveTechAdmin"
             const inputHex = stringToHex(input);
 
             if (inputHex === correctHex) {
@@ -64,13 +42,6 @@
                 alert("Incorrect password!");
             }
         }
-
-        function goHome() {
-            document.getElementById('content').innerHTML = '';
-        }
-    </script>
-</body>
-</html>
 
         function goHome() {
             document.getElementById('content').innerHTML = '';
