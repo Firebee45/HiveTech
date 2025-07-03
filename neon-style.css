@@ -13,7 +13,7 @@ header {
 }
 
 .panel {
-  background: rgba(0, 0, 0, 0.4); /* darker glass effect */
+  background: rgba(0, 0, 0, 0.75); /* ← stronger dark tint */
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
   border-radius: 20px;
@@ -21,8 +21,10 @@ header {
   margin: 60px auto;
   width: 90%;
   max-width: 500px;
-  box-shadow: 0 0 20px rgba(0, 255, 128, 0.3); /* green glow */
+  box-shadow: 0 0 30px rgba(0, 255, 128, 0.4); /* stronger glow */
   border: 1px solid rgba(255, 255, 255, 0.1);
+  color: #ffffff; /* bright text for better contrast */
+}0.1);
 }
 
 img.logo {
