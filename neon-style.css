@@ -1,55 +1,74 @@
-/* Neon Style Sheet for HiveTech Minecraft Portal */
 body {
-  background-color: #111 !important;
-  color: #ddd;
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  text-align: center;
   margin: 0;
   padding: 0;
-}
-#plot {
-  background-color: #111 !important;
-  max-width: 100%;
-  box-sizing: border-box;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background: linear-gradient(135deg, #0f0f0f, #1a1a1a); /* darker background */
+  color: #ffbf00;
+  text-align: center;
+  min-height: 100vh;
 }
 
 header {
-  padding: 20px 0;
+  padding-top: 40px;
+}
+
+.panel {
+  background: rgba(0, 0, 0, 0.4); /* darker glass effect */
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border-radius: 20px;
+  padding: 30px 20px;
+  margin: 60px auto;
+  width: 90%;
+  max-width: 500px;
+  box-shadow: 0 0 20px rgba(0, 255, 128, 0.3); /* green glow */
+  border: 1px solid rgba(255, 255, 255, 0.1);
 }
 
 img.logo {
-  width: 160px;
+  width: 140px;
   height: auto;
-  filter: drop-shadow(0 0 10px #00ffe0);
+  filter: drop-shadow(0 0 8px #00ff80); /* lime glow */
+  margin-bottom: 10px;
 }
 
 h1 {
-  font-size: 2.5em;
-  color: #00ffe0;
-  text-shadow: 0 0 10px #00ffe0, 0 0 20px #00ffe0;
+  font-size: 2em;
+  margin: 0 0 20px;
+  color: #00ff80; /* lime green */
+  text-shadow: 0 0 6px #00ff80, 0 0 12px #00ff80;
 }
 
 .button-container {
-  margin: 30px 0;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
 }
 
 button {
-  font-size: 18px;
-  padding: 12px 24px;
-  margin: 10px;
-  background-color: #111;
-  color: #00ffe0;
-  border: 2px solid #00ffe0;
-  border-radius: 8px;
+  display: block;
+  width: 100%;
+  font-size: 20px;
+  padding: 18px;
+  background: rgba(0, 255, 128, 0.1); /* green tint */
+  color: #fff;
+  border: 2px solid #00ff80;
+  border-radius: 12px;
   cursor: pointer;
-  box-shadow: 0 0 10px #00ffe0, 0 0 20px #00ffe0 inset;
-  transition: all 0.2s ease-in-out;
+  backdrop-filter: blur(8px);
+  box-shadow:
+    0 0 15px #ffa500,              /* orange outer glow */
+    0 0 8px #00ff80 inset,         /* inner green tint */
+    inset 0 0 5px rgba(0, 255, 128, 0.3);
+  transition: all 0.3s ease-in-out;
 }
 
 button:hover {
-  background-color: #00ffe0;
-  color: #111;
-  box-shadow: 0 0 20px #00ffe0, 0 0 30px #00ffe0 inset;
+  background: rgba(0, 255, 128, 0.3);
+  box-shadow:
+    0 0 25px #ffa500,              /* brighter orange glow */
+    0 0 12px #00ff80 inset,        /* stronger green inside */
+    inset 0 0 10px rgba(0, 255, 128, 0.5);
 }
 
 iframe {
@@ -61,5 +80,6 @@ iframe {
 
 #backBtn {
   display: none;
-  margin: 20px;
+  margin: 30px auto;
+  max-width: 300px;
 }
