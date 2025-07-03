@@ -1,0 +1,178 @@
+{
+  "portals": [
+    {
+      "x": 0,
+      "z": 0,
+      "label": "Spawn",
+      "enabled": true
+    },
+    {
+      "x": 775,
+      "z": 22,
+      "label": "GMF / Ice Farm",
+      "enabled": true
+    },
+    {
+      "x": 830,
+      "z": 10,
+      "label": "Creeper Farm",
+      "enabled": true
+    },
+    {
+      "x": 1007,
+      "z": -1288,
+      "label": "Fortress Farm",
+      "enabled": true
+    },
+    {
+      "x": 595,
+      "z": 33,
+      "label": "Witch Farm",
+      "enabled": true
+    },
+    {
+      "x": 585,
+      "z": 854,
+      "label": "Target / hay bale Farm",
+      "enabled": true
+    },
+    {
+      "x": 330,
+      "z": 75,
+      "label": "Trident Farm",
+      "enabled": true
+    },
+    {
+      "x": 299,
+      "z": 3,
+      "label": "TNT dupe stash (Temp)",
+      "enabled": true
+    },
+    {
+      "x": 130,
+      "z": 3,
+      "label": "Warden farm",
+      "enabled": true
+    },
+    {
+      "x": 21,
+      "z": 12,
+      "label": "Spawn Area",
+      "enabled": true
+    },
+    {
+      "x": -42,
+      "z": 101,
+      "label": "Stonghold",
+      "enabled": true
+    },
+    {
+      "x": -122,
+      "z": 223,
+      "label": "Emerald Farm",
+      "enabled": true
+    },
+    {
+      "x": -88,
+      "z": 154,
+      "label": "Iron Farm",
+      "enabled": true
+    },
+    {
+      "x": -168,
+      "z": 81,
+      "label": "Guardian Farm",
+      "enabled": true
+    },
+    {
+      "x": -200,
+      "z": 12,
+      "label": "GBD",
+      "enabled": true
+    },
+    {
+      "x": -230,
+      "z": 16,
+      "label": "Villager Trading Hall",
+      "enabled": true
+    },
+    {
+      "x": -255,
+      "z": 24,
+      "label": "Simtick Wool Farm",
+      "enabled": true
+    },
+    {
+      "x": -291,
+      "z": 3,
+      "label": "GMF (old)",
+      "enabled": true
+    },
+    {
+      "x": -300,
+      "z": -300,
+      "label": "Poglight Farm",
+      "enabled": true
+    },
+    {
+      "x": -345,
+      "z": -5,
+      "label": "Piglin Bartering Farm",
+      "enabled": true
+    },
+    {
+      "x": -351,
+      "z": 260,
+      "label": "8x Gold Farm",
+      "enabled": true
+    },
+    {
+      "x": -413,
+      "z": 63,
+      "label": "Cobble / Basalt Farm",
+      "enabled": true
+    },
+    {
+      "x": -499,
+      "z": 15,
+      "label": "Nether Tree Farm",
+      "enabled": true
+    },
+    {
+      "x": -505,
+      "z": -33,
+      "label": "Concrete Converter",
+      "enabled": true
+    },
+    {
+      "x": -572,
+      "z": 12,
+      "label": "Illegal Stash",
+      "enabled": true
+    },
+    {
+      "x": -632,
+      "z": 392,
+      "label": "Emilia’s Base Area",
+      "enabled": true
+    }
+  ],
+  "areas": [
+    {
+      "x1": 225,
+      "z1": 225,
+      "x2": -225,
+      "z2": -255,
+      "label": "Spawn Perimeter",
+      "enabled": true
+    },
+    {
+      "x1": 1039,
+      "z1": -1265,
+      "x2": 992,
+      "z2": -1312,
+      "label": "Fortress Farm Perimeter",
+      "enabled": true
+    }
+  ]
+}
