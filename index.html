@@ -1,10 +1,9 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
+    <meta charset="UTF-8" />
     <title>HiveTech</title>
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="style.css" />
 </head>
 <body>
     <div class="panel center-panel">
@@ -16,14 +15,28 @@
 
     <script>
         function loadPage(page) {
-            document.getElementById('content').innerHTML = 
+            document.getElementById('content').innerHTML =
                 '<button class="back-button" onclick="goHome()">Back to Home</button>' +
                 '<iframe src="' + page + '" frameborder="0"></iframe>';
         }
 
-        function checkPassword() {
-            const password = prompt("Enter password:");
-            if (password === "HiveTechAdmin") {
+        async function checkPassword() {
+            const input = prompt("Enter password:");
+            if (!input) {
+                alert("Password required");
+                return;
+            }
+
+            // SHA-256 hash of "HiveTechAdmin"
+            const correctHash = "24b9249ca1f3e29d351f8e1b3df74d8ef4e2c92a21a1051c6a2cc5e0c4c5a622";
+
+            const encoder = new TextEncoder();
+            const data = encoder.encode(input);
+            const hashBuffer = await crypto.subtle.digest('SHA-256', data);
+            const hashArray = Array.from(new Uint8Array(hashBuffer));
+            const hashHex = hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
+
+            if (hashHex === correctHash) {
                 loadPage('editor.html');
             } else {
                 alert("Incorrect password!");
