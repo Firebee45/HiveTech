@@ -2,51 +2,68 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>HiveTech Server Bits</title>
+  <title>HiveTech Minecraft Map Portal</title>
   <link rel="stylesheet" href="neon-style.css">
 </head>
 <body>
 
-<header>
-  <img src="IMG_8585.png" alt="HiveTech Logo" class="logo">
-  <h1>SMP Portals</h1>
-</header>
+<div class="panel">
+  <header>
+    <img src="CA91A8A4-D1FB-4D07-8BAA-A00E727E9EF5.png" alt="HiveTech Logo" class="logo">
+    <h1>HiveTech Minecraft Portal</h1>
+  </header>
 
-<div class="button-container" id="homeButtons">
-  <button onclick="showViewer()">View Map</button>
-  <button onclick="askPassword()">Edit Map</button>
+  <div class="button-container" id="homeButtons">
+    <button onclick="showViewer()">View Map</button>
+    <button onclick="askPassword()">Edit Map</button>
+  </div>
 </div>
 
 <iframe id="viewerFrame"></iframe>
 <button id="backBtn" onclick="goHome()">Back to Home</button>
 
 <script>
-  const password = "HiveTechAdmin";
+  const passwordHash = "9b50fd14c2bb0088814b06cd6b97fe183aa43b30a4c2f9f3c422ae6a0cf1450e";
 
-  function showViewer() {
-    document.getElementById('viewerFrame').src = 'viewer.html';
-    document.getElementById('viewerFrame').style.display = 'block';
-    document.getElementById('homeButtons').style.display = 'none';
-    document.getElementById('backBtn').style.display = 'inline-block';
+  async function hashPassword(input) {
+    const encoder = new TextEncoder();
+    const data = encoder.encode(input);
+    const hashBuffer = await crypto.subtle.digest("SHA-256", data);
+    return Array.from(new Uint8Array(hashBuffer))
+      .map(b => b.toString(16).padStart(2, "0"))
+      .join("");
   }
 
-  function askPassword() {
+  async function askPassword() {
     const input = prompt("Enter password to access the editor:");
-    if (input === password) {
-      document.getElementById('viewerFrame').src = 'editor.html';
-      document.getElementById('viewerFrame').style.display = 'block';
-      document.getElementById('homeButtons').style.display = 'none';
-      document.getElementById('backBtn').style.display = 'inline-block';
-    } else if (input !== null) {
-      alert("Incorrect password.");
+    if (input !== null) {
+      const hashedInput = await hashPassword(input);
+      if (hashedInput === passwordHash) {
+        document.getElementById("viewerFrame").src = "editor.html";
+        document.getElementById("viewerFrame").style.display = "block";
+        document.getElementById("homeButtons").style.display = "none";
+        document.querySelector(".panel").style.display = "none";
+        document.getElementById("backBtn").style.display = "inline-block";
+      } else {
+        alert("Incorrect password.");
+      }
     }
   }
 
+  function showViewer() {
+    document.getElementById("viewerFrame").src = "viewer.html";
+    document.getElementById("viewerFrame").style.display = "block";
+    document.getElementById("homeButtons").style.display = "none";
+    document.querySelector(".panel").style.display = "none";
+    document.getElementById("backBtn").style.display = "inline-block";
+  }
+
   function goHome() {
-    document.getElementById('viewerFrame').style.display = 'none';
-    document.getElementById('viewerFrame').src = '';
-    document.getElementById('homeButtons').style.display = 'block';
-    document.getElementById('backBtn').style.display = 'none';
+    document.getElementById("viewerFrame").style.display = "none";
+    document.getElementById("viewerFrame").src = "";
+    document.getElementById("homeButtons").style.display = "block";
+    document.querySelector(".panel").style.display = "block";
+    document.getElementById("backBtn").style.display = "none";
   }
 </script>
 
