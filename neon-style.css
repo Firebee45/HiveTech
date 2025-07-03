@@ -1,4 +1,3 @@
-/* Orange Neon Style for HiveTech Minecraft Portal */
 body {
   margin: 0;
   padding: 0;
@@ -14,7 +13,7 @@ header {
 }
 
 .panel {
-  background: rgba(255, 255, 255, 0.05);
+  background: rgba(0, 0, 0, 0.4); /* darker glass effect */
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
   border-radius: 20px;
@@ -22,22 +21,22 @@ header {
   margin: 60px auto;
   width: 90%;
   max-width: 500px;
-  box-shadow: 0 0 20px rgba(255, 165, 0, 0.5);
+  box-shadow: 0 0 20px rgba(0, 255, 128, 0.3); /* green glow */
   border: 1px solid rgba(255, 255, 255, 0.1);
 }
 
 img.logo {
   width: 140px;
   height: auto;
-  filter: drop-shadow(0 0 8px #ff8c00);
+  filter: drop-shadow(0 0 8px #00ff80); /* lime glow */
   margin-bottom: 10px;
 }
 
 h1 {
   font-size: 2em;
   margin: 0 0 20px;
-  color: #ff8c00;
-  text-shadow: 0 0 6px #ff8c00, 0 0 12px #ff8c00;
+  color: #00ff80; /* lime green */
+  text-shadow: 0 0 6px #00ff80, 0 0 12px #00ff80;
 }
 
 .button-container {
@@ -51,19 +50,19 @@ button {
   width: 100%;
   font-size: 20px;
   padding: 18px;
-  background: rgba(255, 140, 0, 0.15);
+  background: rgba(0, 255, 128, 0.1); /* lime tint */
   color: #fff;
-  border: 2px solid #ff8c00;
+  border: 2px solid #00ff80; /* lime green border */
   border-radius: 12px;
   cursor: pointer;
   backdrop-filter: blur(8px);
-  box-shadow: 0 0 12px #ff8c00, inset 0 0 5px rgba(255, 140, 0, 0.3);
+  box-shadow: 0 0 12px #00ff80, inset 0 0 5px rgba(0, 255, 128, 0.3);
   transition: all 0.3s ease-in-out;
 }
 
 button:hover {
-  background: rgba(255, 140, 0, 0.4);
-  box-shadow: 0 0 24px #ff8c00, inset 0 0 10px rgba(255, 140, 0, 0.5);
+  background: rgba(0, 255, 128, 0.3); /* brighter on hover */
+  box-shadow: 0 0 24px #00ff80, inset 0 0 10px rgba(0, 255, 128, 0.5);
 }
 
 iframe {
