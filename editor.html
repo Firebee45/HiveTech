@@ -1,559 +1,77 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <title>Minecraft Portal & Area Map - Editor</title>
-  <link rel="stylesheet" href="neon-style.css" />
-  <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
-  <style>
-    body {
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      background: linear-gradient(135deg, #0e0e0e, #1a1a1a);
-      color: #ffbf00;
-      text-align: center;
-      margin: 0;
-      padding: 20px;
-      min-height: 100vh;
-    }
-
-    .panel {
-      background: rgba(0, 0, 0, 0.7);
-      backdrop-filter: blur(10px);
-      -webkit-backdrop-filter: blur(10px);
-      border-radius: 16px;
-      padding: 20px;
-      margin: 20px auto;
-      max-width: 850px;
-      box-shadow: 0 0 20px rgba(0, 255, 128, 0.3);
-      border: 1px solid rgba(255, 255, 255, 0.05);
-    }
-
-    form, .button-group {
-      margin-bottom: 20px;
-    }
-
-    label, input, button {
-      font-size: 14px;
-      margin: 4px;
-    }
-
-    input[type="number"], input[type="text"] {
-      padding: 6px;
-      border-radius: 6px;
-      border: 1px solid #888;
-      width: 90px;
-      background: #222;
-      color: #fff;
-    }
-
-    .button-group button,
-    form button {
-      background: rgba(0, 255, 128, 0.1);
-      color: #fff;
-      border: 2px solid limegreen;
-      border-radius: 8px;
-      padding: 8px 14px;
-      font-size: 14px;
-      cursor: pointer;
-      backdrop-filter: blur(6px);
-      box-shadow: 0 0 8px limegreen, inset 0 0 4px rgba(0, 255, 128, 0.3);
-      transition: all 0.2s ease-in-out;
-    }
-
-    button:hover {
-      background: rgba(0, 255, 128, 0.3);
-      box-shadow: 0 0 14px limegreen, inset 0 0 8px rgba(0, 255, 128, 0.5);
-    }
-
-    .portal-entry {
-      margin: 6px 0;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 8px;
-      flex-wrap: wrap;
-    }
-
-    .portal-entry label {
-      flex-grow: 1;
-      cursor: pointer;
-    }
-
-    .delete-btn {
-      background: #700;
-      border: none;
-      color: #fff;
-      padding: 4px 8px;
-      font-weight: bold;
-      border-radius: 5px;
-    }
-
-    #plot {
-      width: 100%;
-      height: 600px;
-    }
-
-    .home-button {
-      background: rgba(0, 255, 128, 0.1);
-      color: #fff;
-      border: 2px solid limegreen;
-      border-radius: 8px;
-      padding: 10px 20px;
-      font-size: 16px;
-      cursor: pointer;
-      box-shadow: 0 0 8px limegreen;
-    }
-
-    .home-button:hover {
-      background: rgba(0, 255, 128, 0.3);
-    }
-  </style>
+    <meta charset="UTF-8">
+    <title>Editor - HiveTech</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
 </head>
 <body>
-  <div class="panel">
-    <h2>Minecraft Portal & Area Map - Editor</h2>
-
-    <form id="coordForm">
-      <label>X:</label><input type="number" id="x" required />
-      <label>Z:</label><input type="number" id="z" required />
-      <label>Label:</label><input type="text" id="label" placeholder="Enter label" />
-      <button type="submit">Add Portal</button>
-    </form>
-
-    <form id="areaForm">
-      <label>X1:</label><input type="number" id="x1" required />
-      <label>Z1:</label><input type="number" id="z1" required />
-      <label>X2:</label><input type="number" id="x2" required />
-      <label>Z2:</label><input type="number" id="z2" required />
-      <label>Label:</label><input type="text" id="areaLabel" placeholder="Enter label" />
-      <button type="submit">Add Area</button>
-    </form>
-
-    <div class="button-group">
-      <button onclick="clearAll()">Clear All</button>
-      <button onclick="downloadPNG()">Download PNG</button>
-      <button onclick="exportJSON()">Export JSON</button>
+    <div class="panel">
+        <h1>Editor</h1>
+        <form id="mapForm">
+            <input type="text" name="name" placeholder="Portal/Area Name" required>
+            <input type="number" name="x" placeholder="X Coordinate" required>
+            <input type="number" name="z" placeholder="Z Coordinate" required>
+            <select name="type">
+                <option value="portal">Portal</option>
+                <option value="area">Area</option>
+            </select>
+            <button type="submit">Add</button>
+        </form>
     </div>
-  </div>
+    <div class="panel">
+        <div id="plot" class="plot-container"></div>
+    </div>
+    <script>
+        const plotEl = document.getElementById('plot');
+        const form = document.getElementById('mapForm');
+        let data = { portals: [], areas: [] };
 
-  <div class="panel">
-    <div id="portalList"></div>
-    <div id="plot"></div>
-  </div>
+        function updatePlot() {
+            const portalTrace = {
+                x: data.portals.map(p => p.x),
+                y: data.portals.map(p => p.z),
+                mode: 'markers',
+                type: 'scatter',
+                name: 'Portals',
+                marker: { color: 'aqua', size: 10 }
+            };
+            const areaTrace = {
+                x: data.areas.map(a => a.x),
+                y: data.areas.map(a => a.z),
+                mode: 'text',
+                type: 'scatter',
+                name: 'Areas',
+                text: data.areas.map(a => a.name),
+                textposition: 'top center',
+                textfont: { color: 'orange' }
+            };
+            const layout = {
+                paper_bgcolor: 'black',
+                plot_bgcolor: 'black',
+                xaxis: { gridcolor: '#444' },
+                yaxis: { gridcolor: '#444' }
+            };
+            Plotly.newPlot(plotEl, [portalTrace, areaTrace], layout);
+        }
 
-  <div style="text-align:center; margin: 20px;">
-    <button onclick="window.top.location.href='index.html'" class="home-button">Back to Home</button>
-  </div>
-  
-<script>
-  let portals = [], areas = [];
+        form.onsubmit = e => {
+            e.preventDefault();
+            const formData = new FormData(form);
+            const entry = {
+                name: formData.get("name"),
+                x: parseFloat(formData.get("x")),
+                z: parseFloat(formData.get("z"))
+            };
+            if (formData.get("type") === "portal") data.portals.push(entry);
+            else data.areas.push(entry);
+            updatePlot();
+            form.reset();
+        };
 
-  async function loadInitialData() {
-    const saved = localStorage.getItem('minecraftMapData');
-    if (saved) {
-      try {
-        const parsed = JSON.parse(saved);
-        if (parsed.portals) portals = parsed.portals;
-        if (parsed.areas) areas = parsed.areas;
-        updateList();
         updatePlot();
-      } catch {
-        console.warn('Saved data corrupted, ignoring.');
-        fetchFromFile();
-      }
-    } else {
-      fetchFromFile();
-    }
-  }
-
-  async function fetchFromFile() {
-    try {
-      const response = await fetch('data.json');
-      if (!response.ok) throw new Error('Failed to fetch data.json');
-      const data = await response.json();
-      portals = data.portals || [];
-      areas = data.areas || [];
-      saveData();
-      updateList();
-      updatePlot();
-    } catch (e) {
-      console.error('Error loading data.json:', e);
-      portals = [];
-      areas = [];
-      updateList();
-      updatePlot();
-    }
-  }
-
-  const coordForm = document.getElementById("coordForm");
-  const areaForm = document.getElementById("areaForm");
-
-  coordForm.addEventListener("submit", e => {
-    e.preventDefault();
-    const x = +document.getElementById("x").value;
-    const z = +document.getElementById("z").value;
-    const label = document.getElementById("label").value.trim() || `Portal ${portals.length+1}`;
-    portals.push({ x, z, label, enabled: true });
-    coordForm.reset();
-    saveData();
-    updateList();
-    updatePlot();
-  });
-
-  areaForm.addEventListener("submit", e => {
-    e.preventDefault();
-    const x1 = +document.getElementById("x1").value;
-    const z1 = +document.getElementById("z1").value;
-    const x2 = +document.getElementById("x2").value;
-    const z2 = +document.getElementById("z2").value;
-    const label = document.getElementById("areaLabel").value.trim() || `Area ${areas.length+1}`;
-    areas.push({ x1, z1, x2, z2, label, enabled: true });
-    areaForm.reset();
-    saveData();
-    updateList();
-    updatePlot();
-  });
-
-  function updateList() {
-    const div = document.getElementById("portalList");
-    div.innerHTML = '';
-
-    portals.forEach((p, i) => {
-      const wrapper = document.createElement('div');
-      wrapper.className = 'portal-entry';
-
-      // checkbox to toggle enabled
-      const checkbox = document.createElement('input');
-      checkbox.type = 'checkbox';
-      checkbox.checked = p.enabled;
-      checkbox.onchange = () => { toggleP(i); };
-      wrapper.appendChild(checkbox);
-
-      // label text
-      const label = document.createElement('label');
-      label.textContent = `🟣 ${p.label} (${p.x},${p.z})`;
-      label.onclick = () => {
-        checkbox.checked = !checkbox.checked;
-        toggleP(i);
-      };
-      wrapper.appendChild(label);
-
-      // EDIT button
-      const editBtn = document.createElement('button');
-      editBtn.textContent = '✎';
-      editBtn.style.marginLeft = '8px';
-      editBtn.onclick = () => {
-        wrapper.innerHTML = '';
-
-        const xInput = document.createElement('input');
-        xInput.type = 'number';
-        xInput.value = p.x;
-        xInput.style.width = '60px';
-
-        const zInput = document.createElement('input');
-        zInput.type = 'number';
-        zInput.value = p.z;
-        zInput.style.width = '60px';
-
-        const labelInput = document.createElement('input');
-        labelInput.type = 'text';
-        labelInput.value = p.label;
-        labelInput.style.width = '120px';
-
-        const saveBtn = document.createElement('button');
-        saveBtn.textContent = 'Save';
-        saveBtn.onclick = () => {
-          p.x = Number(xInput.value);
-          p.z = Number(zInput.value);
-          p.label = labelInput.value.trim() || p.label;
-          saveData();
-          updateList();
-          updatePlot();
-        };
-        
-        const cancelBtn = document.createElement('button');
-        cancelBtn.textContent = 'Cancel';
-        cancelBtn.onclick = () => {
-          updateList();
-        };
-
-        wrapper.appendChild(xInput);
-        wrapper.appendChild(zInput);
-        wrapper.appendChild(labelInput);
-        wrapper.appendChild(saveBtn);
-        wrapper.appendChild(cancelBtn);
-      };
-      wrapper.appendChild(editBtn);
-
-      const delBtn = document.createElement('button');
-      delBtn.className = 'delete-btn';
-      delBtn.textContent = '✖';
-      delBtn.onclick = () => {
-        portals.splice(i, 1);
-        saveData();
-        updateList();
-        updatePlot();
-      };
-      wrapper.appendChild(delBtn);
-
-      div.appendChild(wrapper);
-    });
-
-    areas.forEach((a, i) => {
-      const wrapper = document.createElement('div');
-      wrapper.className = 'portal-entry';
-
-      const checkbox = document.createElement('input');
-      checkbox.type = 'checkbox';
-      checkbox.checked = a.enabled;
-      checkbox.onchange = () => { toggleA(i); };
-      wrapper.appendChild(checkbox);
-
-      const label = document.createElement('label');
-      label.textContent = `🟥 ${a.label} [(${a.x1},${a.z1})→(${a.x2},${a.z2})]`;
-      label.onclick = () => {
-        checkbox.checked = !checkbox.checked;
-        toggleA(i);
-      };
-      wrapper.appendChild(label);
-
-      //EDIT button
-      const editBtn = document.createElement('button');
-      editBtn.textContent = '✎';
-      editBtn.style.marginLeft = '8px';
-      editBtn.onclick = () => {
-        wrapper.innerHTML = '';
-
-        const x1Input = document.createElement('input');
-        x1Input.type = 'number';
-        x1Input.value = a.x1;
-        x1Input.style.width = '60px';
-
-        const z1Input = document.createElement('input');
-        z1Input.type = 'number';
-        z1Input.value = a.z1;
-        z1Input.style.width = '60px';
-
-        const x2Input = document.createElement('input');
-        x2Input.type = 'number';
-        x2Input.value = a.x2;
-        x2Input.style.width = '60px';
-
-        const z2Input = document.createElement('input');
-        z2Input.type = 'number';
-        z2Input.value = a.z2;
-        z2Input.style.width = '60px';
-
-        const labelInput = document.createElement('input');
-        labelInput.type = 'text';
-        labelInput.value = a.label;
-        labelInput.style.width = '120px';
-
-        const saveBtn = document.createElement('button');
-        saveBtn.textContent = 'Save';
-        saveBtn.onclick = () => {
-          a.x1 = Number(x1Input.value);
-          a.z1 = Number(z1Input.value);
-          a.x2 = Number(x2Input.value);
-          a.z2 = Number(z2Input.value);
-          a.label = labelInput.value.trim() || a.label;
-          saveData();
-          updateList();
-          updatePlot();
-        };
-
-        const cancelBtn = document.createElement('button');
-        cancelBtn.textContent = 'Cancel';
-        cancelBtn.onclick = () => {
-          updateList();
-        };
-
-        wrapper.appendChild(x1Input);
-        wrapper.appendChild(z1Input);
-        wrapper.appendChild(x2Input);
-        wrapper.appendChild(z2Input);
-        wrapper.appendChild(labelInput);
-        wrapper.appendChild(saveBtn);
-        wrapper.appendChild(cancelBtn);
-      };
-      wrapper.appendChild(editBtn);
-
-      const delBtn = document.createElement('button');
-      delBtn.className = 'delete-btn';
-      delBtn.textContent = '✖';
-      delBtn.onclick = () => {
-        areas.splice(i, 1);
-        saveData();
-        updateList();
-        updatePlot();
-      };
-      wrapper.appendChild(delBtn);
-
-      div.appendChild(wrapper);
-    });
-  }
-
-  function toggleP(i) {
-    portals[i].enabled = !portals[i].enabled;
-    saveData();
-    updatePlot();
-  }
-  function toggleA(i) {
-    areas[i].enabled = !areas[i].enabled;
-    saveData();
-    updatePlot();
-  }
-  function clearAll() {
-    portals = [];
-    areas = [];
-    saveData();
-    updateList();
-    updatePlot();
-  }
-
-  function saveData() {
-    localStorage.setItem('minecraftMapData', JSON.stringify({ portals, areas }));
-  }
-
-  function downloadPNG() {
-    Plotly.downloadImage('plot', {
-      format: 'png', filename: 'minecraft_map',
-      height: 600, width: 900, scale: 2
-    });
-  }
-
-  function exportJSON() {
-    const dataStr = JSON.stringify({ portals, areas }, null, 2);
-    const blob = new Blob([dataStr], {type: "application/json"});
-    const url = URL.createObjectURL(blob);
-    const a = document.createElement('a');
-    a.href = url;
-    a.download = 'minecraft_map_data.json';
-    document.body.appendChild(a);
-    a.click();
-    setTimeout(() => {
-      document.body.removeChild(a);
-      URL.revokeObjectURL(url);
-    }, 0);
-  }
-
-  function calcDtick(range) {
-    const base = 16;
-    const exp = Math.floor(Math.log2(range / base));
-    return base * Math.pow(2, Math.max(exp,0));
-  }
-
-  function updatePlot() {
-    const data = [];
-    const ps = portals.filter(p => p.enabled);
-    if (ps.length) {
-      data.push({
-        x: ps.map(p => p.x),
-        y: ps.map(p => p.z),
-        text: ps.map(p => `${p.label} (${p.x},${p.z})`),
-        mode: 'markers+text',
-        textposition: 'top center',
-        marker: { size: 10, color: 'magenta' },
-        type: 'scatter',
-        name: 'Portals'
-      });
-    }
-
-    areas.filter(a => a.enabled).forEach(a => {
-      const xMin = Math.min(a.x1, a.x2), xMax = Math.max(a.x1, a.x2);
-      const zMin = Math.min(a.z1, a.z2), zMax = Math.max(a.z1, a.z2);
-      data.push({
-        x: [xMin, xMax, xMax, xMin, xMin],
-        y: [zMin, zMin, zMax, zMax, zMin],
-        mode: 'lines',
-        line: { color: 'red', width: 2 },
-        showlegend: false,
-        type: 'scatter'
-      });
-    });
-
-    areas.filter(a => a.enabled).forEach(a => {
-      const centerX = (a.x1 + a.x2) / 2;
-      const centerZ = (a.z1 + a.z2) / 2;
-      data.push({
-        x: [centerX],
-        y: [centerZ],
-        text: [a.label],
-        mode: 'text',
-        textposition: 'top center',
-        textfont: { color: 'red', size: 14 },
-        showlegend: false,
-        type: 'scatter'
-      });
-    });
-
-    const allX = [
-      ...ps.map(p => p.x),
-      ...areas.flatMap(a => [a.x1, a.x2])
-    ];
-    const allZ = [
-      ...ps.map(p => p.z),
-      ...areas.flatMap(a => [a.z1, a.z2])
-    ];
-
-    if (allX.length === 0 || allZ.length === 0) {
-      Plotly.newPlot('plot', [], {
-        xaxis: { zeroline: false },
-        yaxis: { zeroline: false }
-      });
-      return;
-    }
-
-    const minX = Math.min(...allX);
-    const maxX = Math.max(...allX);
-    const minZ = Math.min(...allZ);
-    const maxZ = Math.max(...allZ);
-
-    const margin = 20;
-    const xRange = maxX - minX || 10;
-    const zRange = maxZ - minZ || 10;
-
-    const dtickX = calcDtick(xRange);
-    const dtickZ = calcDtick(zRange);
-
-    const layout = {
-      paper_bgcolor: '#111',
-      plot_bgcolor: '#111',
-      font: { color: '#ddd' },
-      dragmode: false,
-      xaxis: {
-        autorange: false,
-        range: [minX - margin, maxX + margin],
-        dtick: dtickX,
-        zeroline: false,
-        gridcolor: '#333',
-        zerolinecolor: '#555',
-        title: 'X',
-      },
-      yaxis: {
-        autorange: false,
-        range: [minZ - margin, maxZ + margin],
-        dtick: dtickZ,
-        zeroline: false,
-        gridcolor: '#333',
-        zerolinecolor: '#555',
-        title: 'Z',
-        scaleanchor: 'x',
-        scaleratio: 1,
-      },
-      margin: { t: 40, r: 20, b: 40, l: 40 },
-      showlegend: true,
-      legend: { font: { color: '#ccc' } }
-    };
-
-    Plotly.newPlot('plot', data, layout, { responsive: true });
-  }
-
-  loadInitialData();
-</script>
-
-<div style="text-align:center; margin: 20px;">
-  <button onclick="window.top.location.href='index.html'" style="padding: 10px 20px; font-size: 16px;">Back to Home</button>
-</div>
+    </script>
 </body>
 </html>

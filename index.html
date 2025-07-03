@@ -1,68 +1,38 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <title>HiveTech Server Stuff</title>
-  <link rel="stylesheet" href="neon-style.css">
+    <meta charset="UTF-8">
+    <title>HiveTech</title>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
+    <div class="panel center-panel">
+        <h1>HiveTech</h1>
+        <button onclick="loadPage('viewer.html')">View Map</button>
+        <button onclick="checkPassword()">Edit Map</button>
+    </div>
+    <div id="content" class="iframe-container"></div>
 
-<div class="panel">
-  <header>
-    <img src="IMG_8585.png" alt="HiveTech Logo" class="logo">
-    <h1>SMP Nether Portal Map</h1>
-  </header>
+    <script>
+        function loadPage(page) {
+            document.getElementById('content').innerHTML = 
+                '<button class="back-button" onclick="goHome()">Back to Home</button>' +
+                '<iframe src="' + page + '" frameborder="0"></iframe>';
+        }
 
-  <div class="button-container" id="homeButtons">
-    <button onclick="showViewer()">View Map</button>
-    <button onclick="askPassword()">Edit Map</button>
-  </div>
-</div>
+        function checkPassword() {
+            const password = prompt("Enter password:");
+            if (password === "HiveTechAdmin") {
+                loadPage('editor.html');
+            } else {
+                alert("Incorrect password!");
+            }
+        }
 
-<iframe id="viewerFrame"></iframe>
-<button id="backBtn" onclick="goHome()">Back to Home</button>
-
-<script>
-  const passwordHex = "486976655465636841646d696e"; // "HiveTechAdmin" in hex
-
-  function stringToHex(str) {
-    return Array.from(str)
-      .map(char => char.charCodeAt(0).toString(16).padStart(2, '0'))
-      .join('');
-  }
-
-  function askPassword() {
-    const input = prompt("Enter password to access the editor:");
-    if (input !== null) {
-      const inputHex = stringToHex(input);
-      if (inputHex === passwordHex) {
-        document.getElementById("viewerFrame").src = "editor.html";
-        document.getElementById("viewerFrame").style.display = "block";
-        document.getElementById("homeButtons").style.display = "none";
-        document.querySelector(".panel").style.display = "none";
-        document.getElementById("backBtn").style.display = "inline-block";
-      } else {
-        alert("Incorrect password.");
-      }
-    }
-  }
-
-  function showViewer() {
-    document.getElementById("viewerFrame").src = "viewer.html";
-    document.getElementById("viewerFrame").style.display = "block";
-    document.getElementById("homeButtons").style.display = "none";
-    document.querySelector(".panel").style.display = "none";
-    document.getElementById("backBtn").style.display = "inline-block";
-  }
-
-  function goHome() {
-    document.getElementById("viewerFrame").style.display = "none";
-    document.getElementById("viewerFrame").src = "";
-    document.getElementById("homeButtons").style.display = "block";
-    document.querySelector(".panel").style.display = "block";
-    document.getElementById("backBtn").style.display = "none";
-  }
-</script>
-
+        function goHome() {
+            document.getElementById('content').innerHTML = '';
+        }
+    </script>
 </body>
 </html>

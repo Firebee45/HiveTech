@@ -1,0 +1,71 @@
+
+body {
+    margin: 0;
+    font-family: 'Segoe UI', sans-serif;
+    background: linear-gradient(to bottom, #ff8c00, #ffd700);
+    background-attachment: fixed;
+    background-size: cover;
+    color: white;
+}
+
+.panel {
+    background: rgba(0, 0, 0, 0.6);
+    padding: 20px;
+    margin: 20px auto;
+    border-radius: 12px;
+    max-width: 800px;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
+}
+
+.center-panel {
+    text-align: center;
+}
+
+button {
+    display: block;
+    width: 100%;
+    margin: 10px auto;
+    padding: 14px 20px;
+    font-size: 1.2em;
+    color: white;
+    background: rgba(0, 0, 0, 0.8);
+    border: 2px solid #ffd700;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: box-shadow 0.3s;
+}
+
+button:hover {
+    box-shadow: 0 0 15px #ffd700;
+}
+
+input, select {
+    display: block;
+    width: calc(100% - 20px);
+    margin: 10px auto;
+    padding: 10px;
+    font-size: 1em;
+    background: #222;
+    color: white;
+    border: none;
+    border-radius: 6px;
+}
+
+.plot-container {
+    width: 100%;
+    height: 600px;
+}
+
+.iframe-container iframe {
+    width: 100%;
+    height: 90vh;
+    border: none;
+    margin-top: 20px;
+}
+
+.back-button {
+    margin: 10px auto;
+    width: auto;
+    padding: 10px 20px;
+    font-size: 1em;
+}
