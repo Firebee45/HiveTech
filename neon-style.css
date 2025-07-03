@@ -1,11 +1,16 @@
 /* Neon Style Sheet for HiveTech Minecraft Portal */
 body {
-  background-color: #0d0d0d;
-  color: #00ffe0;
+  background-color: #111 !important;
+  color: #ddd;
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   text-align: center;
   margin: 0;
   padding: 0;
+}
+#plot {
+  background-color: #111 !important;
+  max-width: 100%;
+  box-sizing: border-box;
 }
 
 header {
