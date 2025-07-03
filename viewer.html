@@ -1,49 +1,19 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <title>Viewer - HiveTech</title>
-    <link rel="stylesheet" href="style.css">
-    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>HiveTech Viewer</title>
+  <link rel="stylesheet" href="style.css"/>
+  <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
 </head>
 <body>
-    <div class="panel center-panel">
-        <h1>Map Viewer</h1>
-    </div>
-    <div class="panel">
-        <div id="plot" class="plot-container"></div>
-    </div>
-    <script>
-        const data = {
-            portals: [{x: 10, z: 10, name: "Alpha"}, {x: -10, z: -10, name: "Beta"}],
-            areas: [{x: 0, z: 0, name: "Central Hub"}]
-        };
-        const portalTrace = {
-            x: data.portals.map(p => p.x),
-            y: data.portals.map(p => p.z),
-            mode: 'markers',
-            type: 'scatter',
-            name: 'Portals',
-            marker: { color: 'aqua', size: 10 }
-        };
-        const areaTrace = {
-            x: data.areas.map(a => a.x),
-            y: data.areas.map(a => a.z),
-            mode: 'text',
-            type: 'scatter',
-            name: 'Areas',
-            text: data.areas.map(a => a.name),
-            textposition: 'top center',
-            textfont: { color: 'orange' }
-        };
-        const layout = {
-            paper_bgcolor: 'black',
-            plot_bgcolor: 'black',
-            xaxis: { gridcolor: '#444' },
-            yaxis: { gridcolor: '#444' }
-        };
-        Plotly.newPlot('plot', [portalTrace, areaTrace], layout);
-    </script>
+  <div class="panel center-text">
+    <h1>Map Viewer</h1>
+    <button class="glow-button" onclick="window.location.href='index.html'">Back to Home</button>
+  </div>
+  <div class="panel">
+    <div id="map"></div>
+  </div>
 </body>
 </html>

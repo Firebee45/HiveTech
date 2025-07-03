@@ -1,77 +1,28 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <title>Editor - HiveTech</title>
-    <link rel="stylesheet" href="style.css">
-    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>HiveTech Editor</title>
+  <link rel="stylesheet" href="style.css"/>
+  <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
 </head>
 <body>
-    <div class="panel">
-        <h1>Editor</h1>
-        <form id="mapForm">
-            <input type="text" name="name" placeholder="Portal/Area Name" required>
-            <input type="number" name="x" placeholder="X Coordinate" required>
-            <input type="number" name="z" placeholder="Z Coordinate" required>
-            <select name="type">
-                <option value="portal">Portal</option>
-                <option value="area">Area</option>
-            </select>
-            <button type="submit">Add</button>
-        </form>
-    </div>
-    <div class="panel">
-        <div id="plot" class="plot-container"></div>
-    </div>
-    <script>
-        const plotEl = document.getElementById('plot');
-        const form = document.getElementById('mapForm');
-        let data = { portals: [], areas: [] };
-
-        function updatePlot() {
-            const portalTrace = {
-                x: data.portals.map(p => p.x),
-                y: data.portals.map(p => p.z),
-                mode: 'markers',
-                type: 'scatter',
-                name: 'Portals',
-                marker: { color: 'aqua', size: 10 }
-            };
-            const areaTrace = {
-                x: data.areas.map(a => a.x),
-                y: data.areas.map(a => a.z),
-                mode: 'text',
-                type: 'scatter',
-                name: 'Areas',
-                text: data.areas.map(a => a.name),
-                textposition: 'top center',
-                textfont: { color: 'orange' }
-            };
-            const layout = {
-                paper_bgcolor: 'black',
-                plot_bgcolor: 'black',
-                xaxis: { gridcolor: '#444' },
-                yaxis: { gridcolor: '#444' }
-            };
-            Plotly.newPlot(plotEl, [portalTrace, areaTrace], layout);
-        }
-
-        form.onsubmit = e => {
-            e.preventDefault();
-            const formData = new FormData(form);
-            const entry = {
-                name: formData.get("name"),
-                x: parseFloat(formData.get("x")),
-                z: parseFloat(formData.get("z"))
-            };
-            if (formData.get("type") === "portal") data.portals.push(entry);
-            else data.areas.push(entry);
-            updatePlot();
-            form.reset();
-        };
-
-        updatePlot();
-    </script>
+  <div class="panel center-text">
+    <h1>Map Editor</h1>
+    <button class="glow-button" onclick="window.location.href='index.html'">Back to Home</button>
+  </div>
+  <div class="panel">
+    <!-- Form elements go here -->
+    <form id="portalForm">
+      <label>Portal Name: <input type="text" name="name" required /></label>
+      <label>X: <input type="number" name="x" required /></label>
+      <label>Z: <input type="number" name="z" required /></label>
+      <button class="glow-button" type="submit">Add Portal</button>
+    </form>
+  </div>
+  <div class="panel">
+    <div id="map"></div>
+  </div>
 </body>
 </html>
