@@ -23,21 +23,19 @@
 <button id="backBtn" onclick="goHome()">Back to Home</button>
 
 <script>
-  const passwordHash = "9b50fd14c2bb0088814b06cd6b97fe183aa43b30a4c2f9f3c422ae6a0cf1450e";
-  async function hashPassword(input) {
-    const encoder = new TextEncoder();
-    const data = encoder.encode(input);
-    const hashBuffer = await crypto.subtle.digest("SHA-256", data);
-    return Array.from(new Uint8Array(hashBuffer))
-      .map(b => b.toString(16).padStart(2, "0"))
-      .join("");
+  const passwordHex = "486976655465636841646d696e"; // "HiveTechAdmin" in hex
+
+  function stringToHex(str) {
+    return Array.from(str)
+      .map(char => char.charCodeAt(0).toString(16).padStart(2, '0'))
+      .join('');
   }
 
-  async function askPassword() {
+  function askPassword() {
     const input = prompt("Enter password to access the editor:");
     if (input !== null) {
-      const hashedInput = await hashPassword(input);
-      if (hashedInput === passwordHash) {
+      const inputHex = stringToHex(input);
+      if (inputHex === passwordHex) {
         document.getElementById("viewerFrame").src = "editor.html";
         document.getElementById("viewerFrame").style.display = "block";
         document.getElementById("homeButtons").style.display = "none";
