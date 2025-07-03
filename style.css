@@ -1,77 +1,71 @@
 
-/* Background: flipped gradient (yellow top → orange bottom) */
 body {
-  margin: 0;
-  min-height: 100vh;
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  background: linear-gradient(to bottom, #fff8b8, #e06a00);
-  color: #eee;
-  font-size: 16px; /* comfy base font size */
-  line-height: 1.5;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+    margin: 0;
+    font-family: 'Segoe UI', sans-serif;
+    background: linear-gradient(to bottom, #ff8c00, #ffd700);
+    background-attachment: fixed;
+    background-size: cover;
+    color: white;
 }
 
-/* Panels: keep width comfortable, not too narrow or wide */
 .panel {
-  background: rgba(25, 25, 25, 0.85); /* dark glassy */
-  border-radius: 10px;
-  padding: 25px;
-  margin: 25px auto;
-  max-width: 1000px; /* wider than before */
-  box-shadow:
-    0 0 20px rgba(230, 106, 0, 0.3),
-    inset 0 0 10px rgba(255, 255, 255, 0.1);
+    background: rgba(0, 0, 0, 0.6);
+    padding: 20px;
+    margin: 20px auto;
+    border-radius: 12px;
+    max-width: 800px;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
 }
 
-/* Text inside panels */
-h1, h2, h3, p, label {
-  color: #f5f5dc; /* warm cream text */
+.center-panel {
+    text-align: center;
 }
 
-/* Buttons: keep as before, with glow */
-button, input[type="button"], input[type="submit"] {
-  cursor: pointer;
-  background: #222;
-  border: 2px solid #f5e26a;
-  box-shadow: 0 0 6px #f5e26a;
-  color: #f5e26a;
-  font-weight: 600;
-  padding: 10px 20px;
-  border-radius: 5px;
-  transition: all 0.3s ease;
+button {
+    display: block;
+    width: 100%;
+    margin: 10px auto;
+    padding: 14px 20px;
+    font-size: 1.2em;
+    color: white;
+    background: rgba(0, 0, 0, 0.8);
+    border: 2px solid #ffd700;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: box-shadow 0.3s;
 }
 
-button:hover, input[type="button"]:hover, input[type="submit"]:hover {
-  background: #f5e26a;
-  color: #222;
-  box-shadow: 0 0 15px #f5e26a;
+button:hover {
+    box-shadow: 0 0 15px #ffd700;
 }
 
-/* Index buttons: stacked, short and long */
-#index-buttons {
-  display: flex;
-  flex-direction: column;
-  gap: 18px;
-  max-width: 240px;
-  margin: 40px auto 60px;
+input, select {
+    display: block;
+    width: calc(100% - 20px);
+    margin: 10px auto;
+    padding: 10px;
+    font-size: 1em;
+    background: #222;
+    color: white;
+    border: none;
+    border-radius: 6px;
 }
 
-#index-buttons button {
-  width: 100%;
-  font-size: 1.1rem;
-  padding: 14px 20px;
+.plot-container {
+    width: 100%;
+    height: 600px;
 }
 
-/* Responsive fix for smaller screens */
-@media (max-width: 480px) {
-  .panel {
-    margin: 15px 12px;
-    padding: 18px;
-  }
+.iframe-container iframe {
+    width: 100%;
+    height: 90vh;
+    border: none;
+    margin-top: 20px;
+}
 
-  #index-buttons {
-    max-width: 100%;
-    margin: 20px 10px 40px;
-  }
+.back-button {
+    margin: 10px auto;
+    width: auto;
+    padding: 10px 20px;
+    font-size: 1em;
 }
