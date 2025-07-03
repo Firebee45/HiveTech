@@ -177,10 +177,8 @@
       editBtn.textContent = '✎';
       editBtn.style.marginLeft = '8px';
       editBtn.onclick = () => {
-        // replace contents with inputs
         wrapper.innerHTML = '';
 
-        // inputs for x, z, label
         const xInput = document.createElement('input');
         xInput.type = 'number';
         xInput.value = p.x;
@@ -196,7 +194,6 @@
         labelInput.value = p.label;
         labelInput.style.width = '120px';
 
-        // save button
         const saveBtn = document.createElement('button');
         saveBtn.textContent = 'Save';
         saveBtn.onclick = () => {
@@ -207,8 +204,7 @@
           updateList();
           updatePlot();
         };
-
-        // cancel button
+        
         const cancelBtn = document.createElement('button');
         cancelBtn.textContent = 'Cancel';
         cancelBtn.onclick = () => {
@@ -223,7 +219,6 @@
       };
       wrapper.appendChild(editBtn);
 
-      // delete button
       const delBtn = document.createElement('button');
       delBtn.className = 'delete-btn';
       delBtn.textContent = '✖';
@@ -242,14 +237,12 @@
       const wrapper = document.createElement('div');
       wrapper.className = 'portal-entry';
 
-      // checkbox to toggle enabled
       const checkbox = document.createElement('input');
       checkbox.type = 'checkbox';
       checkbox.checked = a.enabled;
       checkbox.onchange = () => { toggleA(i); };
       wrapper.appendChild(checkbox);
 
-      // label text
       const label = document.createElement('label');
       label.textContent = `🟥 ${a.label} [(${a.x1},${a.z1})→(${a.x2},${a.z2})]`;
       label.onclick = () => {
@@ -258,14 +251,13 @@
       };
       wrapper.appendChild(label);
 
-      // EDIT button
+      //EDIT button
       const editBtn = document.createElement('button');
       editBtn.textContent = '✎';
       editBtn.style.marginLeft = '8px';
       editBtn.onclick = () => {
         wrapper.innerHTML = '';
 
-        // inputs for x1, z1, x2, z2, label
         const x1Input = document.createElement('input');
         x1Input.type = 'number';
         x1Input.value = a.x1;
@@ -291,7 +283,6 @@
         labelInput.value = a.label;
         labelInput.style.width = '120px';
 
-        // save button
         const saveBtn = document.createElement('button');
         saveBtn.textContent = 'Save';
         saveBtn.onclick = () => {
@@ -305,7 +296,6 @@
           updatePlot();
         };
 
-        // cancel button
         const cancelBtn = document.createElement('button');
         cancelBtn.textContent = 'Cancel';
         cancelBtn.onclick = () => {
@@ -322,7 +312,6 @@
       };
       wrapper.appendChild(editBtn);
 
-      // delete button
       const delBtn = document.createElement('button');
       delBtn.className = 'delete-btn';
       delBtn.textContent = '✖';
@@ -417,7 +406,6 @@
       });
     });
 
-    // Labels for areas
     areas.filter(a => a.enabled).forEach(a => {
       const centerX = (a.x1 + a.x2) / 2;
       const centerZ = (a.z1 + a.z2) / 2;
@@ -433,7 +421,6 @@
       });
     });
 
-    // Calculate plot boundaries
     const allX = [
       ...ps.map(p => p.x),
       ...areas.flatMap(a => [a.x1, a.x2])
