@@ -1,71 +1,117 @@
 
-body {
+html, body {
     margin: 0;
-    font-family: 'Segoe UI', sans-serif;
-    background: linear-gradient(to bottom, #ff8c00, #ffd700);
-    background-attachment: fixed;
-    background-size: cover;
-    color: white;
-}
-
-.panel {
-    background: rgba(0, 0, 0, 0.6);
-    padding: 20px;
-    margin: 20px auto;
-    border-radius: 12px;
-    max-width: 800px;
-    box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
-}
-
-.center-panel {
-    text-align: center;
-}
-
-button {
-    display: block;
+    padding: 0;
+    height: 100%;
     width: 100%;
-    margin: 10px auto;
-    padding: 14px 20px;
-    font-size: 1.2em;
-    color: white;
-    background: rgba(0, 0, 0, 0.8);
-    border: 2px solid #ffd700;
+    box-sizing: border-box;
+    font-family: 'Segoe UI', sans-serif;
+    background: linear-gradient(to bottom, #ffb347, #ffe066);
+}
+
+/* Center panel and scale for all screen sizes */
+.panel {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background: rgba(0, 0, 0, 0.7);
+    padding: 2rem;
+    margin: auto;
+    max-width: 500px;
+    width: 90%;
+    border-radius: 12px;
+    text-align: center;
+    box-shadow: 0 0 20px rgba(255, 255, 100, 0.3);
+    margin-top: 10vh;
+}
+
+/* Title styling */
+h1 {
+    color: #fff;
+    margin-bottom: 1.5rem;
+}
+
+/* Consistent button styling */
+button {
+    margin: 0.5rem;
+    padding: 0.75rem 1.5rem;
+    background: transparent;
+    border: 2px solid #ffe066;
+    color: #ffe066;
+    font-size: 1rem;
     border-radius: 8px;
     cursor: pointer;
-    transition: box-shadow 0.3s;
+    transition: all 0.3s ease;
+    width: 100%;
+    max-width: 300px;
+    text-shadow: 0 0 5px #000;
 }
 
 button:hover {
-    box-shadow: 0 0 15px #ffd700;
+    background-color: #ffe066;
+    color: #000;
+    box-shadow: 0 0 10px #ffe066;
 }
 
-input, select {
-    display: block;
-    width: calc(100% - 20px);
-    margin: 10px auto;
-    padding: 10px;
-    font-size: 1em;
-    background: #222;
-    color: white;
-    border: none;
-    border-radius: 6px;
-}
-
-.plot-container {
+/* Iframe container fills the screen */
+.iframe-container {
     width: 100%;
-    height: 600px;
+    height: 100vh;
+    position: relative;
+    background-color: #000;
 }
 
+/* Iframe scales with the window */
 .iframe-container iframe {
+    position: absolute;
+    top: 50px; /* space for back button */
+    left: 0;
     width: 100%;
-    height: 90vh;
+    height: calc(100vh - 50px);
     border: none;
-    margin-top: 20px;
 }
 
+/* Back to Home button */
 .back-button {
-    margin: 10px auto;
-    width: auto;
-    padding: 10px 20px;
-    font-size: 1em;
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    background: transparent;
+    border: 2px solid #ffe066;
+    color: #ffe066;
+    padding: 0.5rem 1rem;
+    border-radius: 6px;
+    font-size: 0.9rem;
+    cursor: pointer;
+    z-index: 10;
+    transition: all 0.3s ease;
+}
+
+.back-button:hover {
+    background-color: #ffe066;
+    color: #000;
+    box-shadow: 0 0 10px #ffe066;
+}
+
+/* Responsive tweaks for small screens */
+@media (max-width: 600px) {
+    .panel {
+        margin-top: 5vh;
+        padding: 1.5rem;
+    }
+
+    h1 {
+        font-size: 1.75rem;
+    }
+
+    button {
+        font-size: 0.95rem;
+        padding: 0.6rem 1rem;
+    }
+
+    .back-button {
+        font-size: 0.85rem;
+        padding: 0.4rem 0.8rem;
+    }
 }
